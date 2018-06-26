@@ -9,9 +9,21 @@
 using namespace std;
 
 
-void powrot() // niezrobione
+void powrot()
 {
     cout << "Aby powrocic nacisnij [1]" << endl;
+
+    char powrot;
+
+    do
+    {
+        powrot = getch();
+        switch(powrot)
+            {
+            case 49: cout << ' '; // po prostu nic sie nie dzieje i powraca do menu
+                break;
+            }
+    }while(powrot != 49);
 }
 void layout()
 {
@@ -140,6 +152,7 @@ void Klient::przelew()
 
 void Klient::dane_klienta()
 {
+    string nazwa_pliku = nazwisko + ".txt";
     string login;
     string hasl;
     float pieniadze;
@@ -147,7 +160,7 @@ void Klient::dane_klienta()
     string linia;
     int numer_linii = 1;
 
-ifstream plik("kowalski.txt", ios::in);
+ifstream plik(nazwa_pliku.c_str(), ios::in);
         if(plik.good() == false)
         {
             cout << "Blad krytyczny przy otwarciu pliku!" << endl;
@@ -185,8 +198,8 @@ void menu(bool &zalogowany, Klient k)
 
 
     cout << "[1] Przelew srodkow" << endl;
-    cout << "[2] //Przelew srodkow" << endl;
-    cout << "[3] //rzelew srodkow" << endl;
+    cout << "[2] Dane konta" << endl;
+    cout << "[3] niema" << endl;
     cout << "[0] Wylogowanie" << endl;
 
     wybor = getch();
@@ -195,12 +208,14 @@ void menu(bool &zalogowany, Klient k)
     {
         case 49: k.przelew();
                  break;
+        case 50: k.wyswietl_dane();
+                 break;
         case 48: zalogowany = false;
                  break;
     }
 }
 
-void logowanie(bool &zalogowany) // zwraca nazwisko czyli login
+void Klient::logowanie(bool &zalogowany) // zwraca nazwisko czyli login
 {
 
     layout();
@@ -253,7 +268,20 @@ void logowanie(bool &zalogowany) // zwraca nazwisko czyli login
 
         }
 
+    nazwisko = poprawny_login;
+    haslo = poprawne_haslo;
 
+}
+
+void Klient::wyswietl_dane()
+{
+    layout();
+
+    cout << "Nazwisko:  " << nazwisko << endl;
+    cout << "Haslo:  " << haslo << endl;
+    cout << "Dostepne srodki:  " << majatek << endl;
+
+    powrot();
 }
 
 

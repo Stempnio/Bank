@@ -22,13 +22,14 @@ public:
        //ifstream plik()
     }
     void dane_klienta();
+    void wyswietl_dane();
     void przelew();
     void zmiana_hasla();
     void historia();
     void zmiana_majatku();
+    void logowanie(bool &zalogowany); // musi byc w klasie aby od razu przypisac nazwisko haslo
 };
 
-void logowanie(bool &zalogowany);
 void konta();
 void layout();
 string wprowadzanie_string();
