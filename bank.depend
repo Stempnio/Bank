@@ -1,0 +1,24 @@
+# depslib dependency file v1.0
+1530013769 source:c:\users\kuba\desktop\c++\bank\main.cpp
+	<iostream>
+	<time.h>
+	<windows.h>
+	<conio.h>
+	"bank.h"
+	<fstream>
+
+1530019149 c:\users\kuba\desktop\c++\bank\bank.h
+	<iostream>
+	<time.h>
+	<windows.h>
+	<conio.h>
+	<fstream>
+
+1530019103 source:c:\users\kuba\desktop\c++\bank\bank.cpp
+	<iostream>
+	<time.h>
+	<windows.h>
+	<conio.h>
+	"bank.h"
+	<fstream>
+
