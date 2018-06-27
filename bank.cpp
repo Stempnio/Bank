@@ -8,9 +8,9 @@
 
 using namespace std;
 
-
 void powrot()
 {
+
     cout << "Aby powrocic nacisnij [1]" << endl;
 
     char powrot;
@@ -27,6 +27,7 @@ void powrot()
 }
 void layout()
 {
+
     system("cls");
     char b = 219;
 
@@ -42,6 +43,7 @@ void layout()
 }
 int wprowadzanie_int(int &data)
 {
+
     cin >> data;
     if(!cin.good())
     {
@@ -58,6 +60,7 @@ int wprowadzanie_int(int &data)
 }
 string wprowadzanie_string(string &data)
 {
+
     cin >> data;
     if(!cin.good())
     {
@@ -74,6 +77,7 @@ string wprowadzanie_string(string &data)
 }
 void Klient::zmiana_majatku()
 {
+
     string nazwa_pliku = nazwisko + ".txt";
     fstream plik(nazwa_pliku.c_str(), ios::out);
 
@@ -190,6 +194,7 @@ void Klient::przelew()
         konto_przelew2 << login << endl;
         konto_przelew2 << hasl << endl;
         konto_przelew2 << pieniadze << endl;
+        konto_przelew2.close();
         }
 
    if(potwierdzenie == 'n')
@@ -200,6 +205,8 @@ void Klient::przelew()
 
 void Klient::dane_klienta()
 {
+
+
     string nazwa_pliku = nazwisko + ".txt";
     string login;
     string hasl;
@@ -239,6 +246,7 @@ ifstream plik(nazwa_pliku.c_str(), ios::in);
 }
 void menu(bool &zalogowany, Klient k)
 {
+
     layout();
 
     char wybor;
@@ -246,7 +254,7 @@ void menu(bool &zalogowany, Klient k)
 
     cout << "[1] Przelew srodkow" << endl;
     cout << "[2] Dane konta" << endl;
-    cout << "[3] niema" << endl;
+    cout << "[3] Zmiana hasla" << endl;
     cout << "[0] Wylogowanie" << endl;
 
     wybor = getch();
@@ -257,13 +265,15 @@ void menu(bool &zalogowany, Klient k)
                  break;
         case 50: k.wyswietl_dane();
                  break;
+        case 51: k.zmiana_hasla();
+                 break;
         case 48: zalogowany = false;
                  break;
     }
 }
-
 void Klient::logowanie(bool &zalogowany) // zwraca nazwisko czyli login
 {
+
 
     layout();
     zalogowany = false;
@@ -318,7 +328,6 @@ void Klient::logowanie(bool &zalogowany) // zwraca nazwisko czyli login
     haslo = poprawne_haslo;
 
 }
-
 void Klient::wyswietl_dane()
 {
     layout();
@@ -330,4 +339,71 @@ void Klient::wyswietl_dane()
     powrot();
 }
 
+void Klient::zmiana_hasla()
+{
+    string nazwa_pliku = nazwisko + ".txt";
 
+    ifstream konto_odczyt(nazwa_pliku.c_str(), ios::in);
+    if(konto_odczyt.good() == false)
+    {
+        cout << "Blad krytyczny, brak konta w bazie" << endl;
+        exit(0);
+    }
+
+        string linia;
+        int numer_linii = 1;
+        string login;
+        string hasl;
+        int pieniadze;
+
+        while(getline(konto_odczyt, linia)) // nalezu pobrac aby pozniej zapisac ze zmienionymi pieniazkami
+                {
+                    switch(numer_linii)
+                    {
+                    case 1: login = linia;
+                        break;
+                    case 2: hasl = linia;
+                        break;
+                    case 3: pieniadze = atoi(linia.c_str());
+                        break;
+                    }
+                numer_linii++;
+                }
+
+    konto_odczyt.close();
+
+    layout();
+    string password;
+    cout << "Podaj nowe haslo: ";
+    cin >> password;
+
+    layout();
+
+    cout << "Nowe haslo: " << password << endl << "Zachowac zmiany? (y/n)" <<endl;
+    char wybor;
+
+    wybor = getch();
+    bool end_loop = false;
+    do
+    {
+        switch(wybor)
+        {
+        case 121:
+                  {
+                  haslo = password;
+                  fstream konto_zapis(nazwa_pliku.c_str(), ios::out); // zapisywanie majatku konta na ktory byl zrobiony przelew
+                  konto_zapis << login << endl;
+                  konto_zapis << haslo << endl;
+                  konto_zapis << pieniadze << endl;
+                  konto_zapis.close();
+                  end_loop = true;
+                  }
+            break;
+        case 110: end_loop = true;
+            break;
+        default: cout << "Wybierz y lub n" << endl;
+        }
+    }while(end_loop == false);
+
+
+}
