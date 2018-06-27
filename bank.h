@@ -18,9 +18,8 @@ public:
         this-> nazwisko = nazwisko;
         this-> haslo = haslo;
         this-> majatek = majatek;
-
-       //ifstream plik()
     }
+
     void dane_klienta();
     void wyswietl_dane();
     void przelew();

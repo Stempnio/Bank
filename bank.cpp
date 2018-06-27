@@ -86,14 +86,55 @@ void Klient::przelew()
 {
     layout();
     char potwierdzenie;
-    int konto;
+    //int konto;
     string nazw;
     int srodki;
     cout << "Twoj stan konta to: " << majatek << " PLN" << endl;
-    cout << "Numer konta: ";
-    wprowadzanie_int(konto);
+    //cout << "Numer konta: ";  // obecnie brak
+    //wprowadzanie_int(konto);
     cout << "Nazwisko odbiorcy: ";
     wprowadzanie_string(nazw);
+
+    if(nazw == nazwisko)
+    {
+        cout << "Nie mozna przelac srodkow na wlasne konto, transakcja anulowana" << endl;
+        Sleep(2000);
+        return;
+    }
+
+    string konto_przelewane = nazw + ".txt";
+
+    ifstream konto_przelew(konto_przelewane.c_str(), ios::in); // jedynie odczyt poprzedniego stanu konta aby zastapic go nowymi (zmieniona ilosc pieniedzy)
+    if(konto_przelew.good() == false)
+    {
+        cout << "Brak konta w bazie danych, transakcja anulowana" << endl;
+        Sleep(2000);
+        return;
+    }
+
+        string linia;
+        int numer_linii = 1;
+        string login;
+        string hasl;
+        int pieniadze;
+
+        while(getline(konto_przelew, linia)) // nalezu pobrac aby pozniej zapisac ze zmienionymi pieniazkami
+                {
+                    switch(numer_linii)
+                    {
+                    case 1: login = linia;
+                        break;
+                    case 2: hasl = linia;
+                        break;
+                    case 3: pieniadze = atoi(linia.c_str());
+                        break;
+                    }
+                numer_linii++;
+                }
+
+    konto_przelew.close();
+
+
     cout << "Kwota przelewu: ";
     wprowadzanie_int(srodki);
     if(srodki > majatek)
@@ -113,7 +154,7 @@ void Klient::przelew()
 
     cout << "Potwierdz przelew" << endl;
     cout << "Nazwisko odbiorcy: " << nazw << endl;
-    cout << "Numer konta: " << konto << endl;
+    //cout << "Numer konta: " << konto << endl;
     cout << "Kwota przelewu: " << srodki << " PLN" << endl;
     cout << "Ilosc srodkow na koncie po transakcji: " << majatek-srodki << " PLN" << endl;
 
@@ -142,6 +183,13 @@ void Klient::przelew()
         cout << "Transakcja wykonana pomyslnie" << endl;
         majatek = majatek - srodki;
         zmiana_majatku();
+
+        fstream konto_przelew2(konto_przelewane.c_str(), ios::out); // zapisywanie majatku konta na ktory byl zrobiony przelew
+
+        pieniadze = pieniadze + srodki;
+        konto_przelew2 << login << endl;
+        konto_przelew2 << hasl << endl;
+        konto_przelew2 << pieniadze << endl;
         }
 
    if(potwierdzenie == 'n')
@@ -191,7 +239,6 @@ ifstream plik(nazwa_pliku.c_str(), ios::in);
 }
 void menu(bool &zalogowany, Klient k)
 {
-    //ifstream plik()
     layout();
 
     char wybor;
@@ -239,7 +286,6 @@ void Klient::logowanie(bool &zalogowany) // zwraca nazwisko czyli login
         {
             cout << "Niepoprawny login i/lub haslo" << endl;
             Sleep(1500);
-            //
         }
         else
         {

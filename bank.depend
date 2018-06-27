@@ -22,7 +22,7 @@
 	"bank.h"
 	<fstream>
 
-1530019640 source:c:\users\kuba\desktop\github\bank\bank.cpp
+1530109728 source:c:\users\kuba\desktop\github\bank\bank.cpp
 	<iostream>
 	<time.h>
 	<windows.h>
@@ -30,7 +30,7 @@
 	"bank.h"
 	<fstream>
 
-1530019861 c:\users\kuba\desktop\github\bank\bank.h
+1530020454 c:\users\kuba\desktop\github\bank\bank.h
 	<iostream>
 	<time.h>
 	<windows.h>
