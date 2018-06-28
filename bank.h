@@ -35,3 +35,4 @@ string wprowadzanie_string();
 int wprowadzanie_int();
 void powrot();
 void menu(bool &zalogowany, Klient);
+void ladowanie();

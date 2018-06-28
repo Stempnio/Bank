@@ -40,6 +40,7 @@ void layout()
         cout << b;
 
     cout << endl << endl;
+
 }
 int wprowadzanie_int(int &data)
 {
@@ -315,7 +316,10 @@ void Klient::logowanie(bool &zalogowany) // zwraca nazwisko czyli login
             plik.close();
 
             if(podany_login == poprawny_login && podane_haslo == poprawne_haslo)
+                {
+                ladowanie();
                 zalogowany = true;
+                }
             else
                 {
                 cout << "Niepoprawny login i/lub haslo" << endl;
@@ -406,4 +410,17 @@ void Klient::zmiana_hasla()
     }while(end_loop == false);
 
 
+}
+
+void ladowanie()
+{
+    layout();
+    cout << "       Trwa ladowanie" << endl;
+    char b = 219;
+    cout  << "     ";
+    for(int i = 0; i < 9; i++)
+    {
+        cout << b << ' ';
+        Sleep(80);
+    }
 }
