@@ -16,6 +16,7 @@ int main()
     {
         zalogowany = false;
         Klient *k = new Klient;
+        ekran_powitalny(*k);
         k->logowanie(zalogowany);
         while(zalogowany == true)
         {

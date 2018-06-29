@@ -27,6 +27,7 @@ public:
     void zmiana_majatku();
     void logowanie(bool &zalogowany); // musi byc w klasie aby od razu przypisac nazwisko haslo
     void zmiana_hasla();
+    void rejestracja();
 };
 
 void konta();
@@ -36,3 +37,4 @@ int wprowadzanie_int();
 void powrot();
 void menu(bool &zalogowany, Klient);
 void ladowanie();
+void ekran_powitalny(Klient k);

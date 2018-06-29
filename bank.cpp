@@ -360,7 +360,7 @@ void Klient::zmiana_hasla()
         string hasl;
         int pieniadze;
 
-        while(getline(konto_odczyt, linia)) // nalezu pobrac aby pozniej zapisac ze zmienionymi pieniazkami
+        while(getline(konto_odczyt, linia)) // nalezu pobrac aby pozniej zapisac ze zmienionymi srodkami
                 {
                     switch(numer_linii)
                     {
@@ -414,6 +414,7 @@ void Klient::zmiana_hasla()
 
 void ladowanie()
 {
+
     layout();
     cout << "       Trwa ladowanie" << endl;
     char b = 219;
@@ -424,3 +425,97 @@ void ladowanie()
         Sleep(80);
     }
 }
+
+void ekran_powitalny(Klient k)
+{
+    layout();
+    cout << "Witaj w systemie bankowosci internetowej." << endl;
+    cout << "[1] Logowanie" << endl;
+    cout << "[2] Rejestracja" << endl;
+    char wybor;
+    bool end_loop = false;
+    do
+    {
+        wybor = getch();
+
+        switch(wybor)
+        {
+        case 49: end_loop = true;
+                 break;
+        case 50: {
+                 k.rejestracja();
+                 end_loop = true;
+                 break;
+                 }
+        default: cout << "Wybierz 1 lub 2" << endl;
+        }
+    }while(end_loop == false);
+}
+
+void Klient::rejestracja()
+{
+    layout();
+    string login;
+    string password;
+
+        cout << "Podaj nazwisko: ";
+        wprowadzanie_string(login);
+        cout << "Podaj haslo: ";
+        wprowadzanie_string(password);
+
+        layout();
+
+        cout << "Dane nowego konta:" << endl;
+        cout << "Nazwisko: " << login << endl;
+        cout << "Haslo: " << password << endl;
+        cout << "Utworzyc konto? (y/n)" << endl;
+
+    int poczatkowe_srodki = 10;
+    char yn;
+
+    yn = getch();
+    bool end_loop = false;
+    do
+    {
+        switch(yn)
+        {
+        case 121: {
+                string nazwa_pliku = login + ".txt";
+                ifstream sprawdzenie(nazwa_pliku.c_str());
+                    if(sprawdzenie.good()) // gdy pliku nie bedzie utworzone zostanie nowe konto ( by nie nadpisac juz istniejacego)
+                        {
+                        cout << "Konto o podanej nazwie istnieje w bazie danych, tworzenie konta przerwane. Nacisnij dowolny przycisk aby kontynuowac" << endl;
+                        getch();
+                        end_loop = true;
+                        }
+                     else if(sprawdzenie.good() == false)
+                     {
+
+                    fstream nowe_konto(nazwa_pliku.c_str(), ios::out);
+
+                    nowe_konto << login << endl;
+                    nowe_konto << password << endl;
+                    nowe_konto << poczatkowe_srodki << endl;
+
+                    nowe_konto.close();
+
+                    cout << "Konto zostalo utworzone, konto zostalo zasilone srodkami: 10 PLN, jako bonus przy zakladaniu konta" << endl;
+                    cout << "Teraz mozesz sie zalogowac, nacisnij dowolny przycisk aby kontynuowac" << endl;
+                    getch();
+                    end_loop = true;
+                     }
+                  }
+            break;
+        case 110: {
+                cout << "Tworzenie konta anulowane, nacisnij dowolny przycisk aby kontynuowac" << endl;
+                getch();
+                end_loop = true;
+                  }
+            break;
+        default: cout << "Wybierz y lub n" << endl;
+        }
+    }while(end_loop == false);
+
+
+}
+
