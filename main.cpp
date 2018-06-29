@@ -15,9 +15,9 @@ int main()
     while(1)
     {
         zalogowany = false;
-        logowanie(zalogowany);
         Klient *k = new Klient;
-
+        ekran_powitalny(*k);
+        k->logowanie(zalogowany);
         while(zalogowany == true)
         {
             k->dane_klienta();
